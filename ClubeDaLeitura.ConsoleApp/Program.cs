@@ -1,4 +1,12 @@
-﻿while (true)
+﻿using ClubeDaLeitura.ConsoleApp.Apresentacao;
+using ClubeDaLeitura.ConsoleApp.Infraestrutura;
+
+RepositorioCaixa repositorioCaixa = new RepositorioCaixa();
+
+TelaCaixa telaCaixa = new TelaCaixa(repositorioCaixa);
+
+
+while (true)
 {
     Console.Clear();
     Console.WriteLine("=================================");
@@ -20,27 +28,46 @@
     }
 
     while (true)
-    {
+    {   
+        
         string? opcaoMenuInterno = string.Empty;
 
-        if (opcaoMenuPrincipal == "1")
+        if (opcaoMenuPrincipal == "1") //caixas
         {
+            opcaoMenuInterno = telaCaixa.ObterOpcaoMenu();
 
+            if (opcaoMenuInterno == "S")
+            {
+                Console.Clear();
+                break;
+            }
+
+            if(opcaoMenuInterno == "1")
+            {
+                telaCaixa.Cadastrar();
+
+                repositorioCaixa.Cadastrar(novaCaixa);
+            }
+            else if(opcaoMenuInterno == "2")
+            {
+                telaCaixa.Editar();
+            }
+            else if(opcaoMenuInterno == "3")
+            {
+                telaCaixa.Excluir();
+            }
+            else if(opcaoMenuInterno == "4")
+            {
+                telaCaixa.VizualizarTodos();
+            }
+                       
         }
-
+        
         else if (opcaoMenuPrincipal == "2")
         {
-
+            
         }
 
-        else if (opcaoMenuPrincipal == "3")
-        {
-
-        }
-
-        else if (opcaoMenuPrincipal == "4")
-        {
-
-        }
+        
     }
 }
