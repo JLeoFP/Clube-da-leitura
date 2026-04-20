@@ -30,6 +30,27 @@ public class Caixa
         DiasDeEmprestimo = diasDeEmprestimo;
     }
 
+    public string[] Validar()
+    {
+        string erros = string.Empty;
+
+        if (string.IsNullOrWhiteSpace(Etiqueta))
+        {
+            erros += "O campo \"Etiqueta\" e obligatorio;";
+        }
+        else if (Etiqueta.Length > 50)
+        {   
+            erros += "O campo \"Etiqueta\" deve conter no maximo 50 caracteres;";
+        }
+
+        if(DiasDeEmprestimo < 1)
+        {
+            erros += "O campo \"Dias de Emprestamo\" deve conter um valor maior que 0;";
+        }
+
+        return erros.Split(';', StringSplitOptions.RemoveEmptyEntries);
+    }
+
     public void AtualizarRegistro(Caixa caixaAtualizada)
     {
         Etiqueta = caixaAtualizada.Etiqueta;
