@@ -36,14 +36,14 @@ public class TelaCaixa
 
         Caixa novaCaixa = ObterDatosCadatras();
 
-        //VALIDACION.
         
         string[] erros = novaCaixa.Validar();
 
         if(erros.Length > 0)
         {
+            Console.WriteLine("=================================");
             Console.ForegroundColor = ConsoleColor.Red;
-            
+
             for(int i = 0; i < erros.Length; i++)
             {
                 string erro = erros[i];
@@ -51,17 +51,18 @@ public class TelaCaixa
             }
 
             Console.ResetColor();
+            Console.WriteLine("=================================");
+            Console.WriteLine("Digite ENTER para continuar...");
             Console.ReadLine();
+
+            Cadastrar();
             return;
         }
+        Console.ResetColor();
 
         repositorioCaixa.Cadastrar(novaCaixa);
 
-        Console.WriteLine("=================================");
-        Console.WriteLine($"O registro \"{novaCaixa.Id}\" foi cadastrado com sucesso! ");
-        Console.WriteLine("=================================");
-        Console.WriteLine("Digite ENTER para continuar...");
-        Console.ReadLine();
+        ExibirMensagem($"O registro \"{novaCaixa.Id}\" foi cadastrado com sucesso! ");
 
     }
     public void ExibirCabecalho(string titulo)
@@ -94,26 +95,41 @@ public class TelaCaixa
 
         Console.WriteLine("=================================");
 
-        //pasage de info para edicion
+       
         Caixa novaCaixa = ObterDatosCadatras();
+
+        string[] erros = novaCaixa.Validar();
+
+        if(erros.Length > 0)
+        {
+            Console.WriteLine("=================================");
+            Console.ForegroundColor = ConsoleColor.Red;
+
+            for(int i = 0; i < erros.Length; i++)
+            {
+                string erro = erros[i];
+                Console.WriteLine(erro);
+            }
+
+            Console.ResetColor();
+            Console.WriteLine("=================================");
+            Console.WriteLine("Digite ENTER para continuar...");
+            Console.ReadLine();
+
+            Editar();
+            return;
+        }
+        Console.ResetColor();
 
         bool conseguiuEditar = repositorioCaixa.Editar(idSeleccionado, novaCaixa);
 
         if (!conseguiuEditar)
         {
-            Console.WriteLine("=================================");
-            Console.WriteLine($"Nao foi possivel encontrar o registro requisitado");
-            Console.WriteLine("=================================");
-            Console.WriteLine("Digite ENTER para continuar...");
-            Console.ReadLine();
+            ExibirMensagem($"Nao foi possivel encontrar o registro requisitado");
             return;
         }
         
-        Console.WriteLine("=================================");
-        Console.WriteLine($"O registro \"{idSeleccionado}\" foi editado com sucesso");
-        Console.WriteLine("=================================");
-        Console.WriteLine("Digite ENTER para continuar...");
-        Console.ReadLine();
+        ExibirMensagem($"O registro \"{idSeleccionado}\" foi editado com sucesso");
     }
 
     public void Excluir()
@@ -139,19 +155,12 @@ public class TelaCaixa
 
         if (!conseguiuExcluir)
         {
-            Console.WriteLine("=================================");
-            Console.WriteLine($"Nao foi possivel encontrar o registro requisitado");
-            Console.WriteLine("=================================");
-            Console.WriteLine("Digite ENTER para continuar...");
-            Console.ReadLine();
+            ExibirMensagem($"Nao foi possivel encontrar o registro requisitado");
             return;
         }
         
-        Console.WriteLine("=================================");
-        Console.WriteLine($"O registro \"{idSeleccionado}\" foi excluido com sucesso");
-        Console.WriteLine("=================================");
-        Console.WriteLine("Digite ENTER para continuar...");
-        Console.ReadLine();
+        ExibirMensagem($"O registro \"{idSeleccionado}\" foi excluido com sucesso");
+
     }
 
     public void VizualizarTodos(bool deveExibirCabecalho)
@@ -226,5 +235,14 @@ public class TelaCaixa
         Caixa novaCaixa = new Caixa(etiqueta, cor, diasdDeEmprestimo);
 
         return novaCaixa;
+    }
+
+    private static void ExibirMensagem(string mesagem)
+    {
+        Console.WriteLine("=================================");
+        Console.WriteLine(mesagem);
+        Console.WriteLine("=================================");
+        Console.WriteLine("Digite ENTER para continuar...");
+        Console.ReadLine();
     }
 }
