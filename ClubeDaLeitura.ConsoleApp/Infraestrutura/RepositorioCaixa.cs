@@ -18,23 +18,10 @@ public class RepositorioCaixa
         }
     }
 
-    public bool Editar(string idSeleccionado, Caixa novaCaixa)
+    public bool Editar(string idSelecionado, Caixa novaCaixa)
     {   
-        Caixa? caixaSeleccionada = null;
+        Caixa? caixaSeleccionada = SelecionarPorId(idSelecionado);
 
-        for(int i = 0; i < caixas.Length; i++)
-        {   
-            Caixa? c= caixas[i];
-
-            if(c == null)
-                continue;
-
-            if (c.Id == idSeleccionado)
-            {
-                caixaSeleccionada = c;
-                break;
-            }
-        }
 
         if(caixaSeleccionada == null)
             return false;
@@ -62,6 +49,27 @@ public class RepositorioCaixa
             }
         }
         return false;
+    }
+
+    public Caixa? SelecionarPorId(string idSelecionado)
+    {
+        Caixa? caixaSelecionada = null;
+
+        for(int i = 0; i < caixas.Length; i++)
+        {   
+            Caixa? c= caixas[i];
+
+            if(c == null)
+                continue;
+
+            if (c.Id == idSelecionado)
+            {
+                caixaSelecionada = c;
+                break;
+            }
+        }
+
+        return caixaSelecionada;
     }
 
     internal Caixa?[] SelecionarTodas()

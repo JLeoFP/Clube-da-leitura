@@ -12,7 +12,7 @@ public class TelaCaixa
         repositorioCaixa = rC;
     }
 
-    public string ObterOpcaoMenu()
+    public string? ObterOpcaoMenu()
     {
         Console.Clear();
         Console.WriteLine("=================================");
@@ -82,14 +82,14 @@ public class TelaCaixa
 
         Console.WriteLine("=================================");
 
-        string? idSeleccionado;
+        string? idSelecionado;
 
         do
         {
             Console.WriteLine("Digite o ID do registro que deseja editar");
-            idSeleccionado = Console.ReadLine();
+            idSelecionado = Console.ReadLine();
 
-            if(!string.IsNullOrWhiteSpace(idSeleccionado) && idSeleccionado.Length == 7)
+            if(!string.IsNullOrWhiteSpace(idSelecionado) && idSelecionado.Length == 7)
                 break;
         }while(true);
 
@@ -121,7 +121,7 @@ public class TelaCaixa
         }
         Console.ResetColor();
 
-        bool conseguiuEditar = repositorioCaixa.Editar(idSeleccionado, novaCaixa);
+        bool conseguiuEditar = repositorioCaixa.Editar(idSelecionado, novaCaixa);
 
         if (!conseguiuEditar)
         {
@@ -129,7 +129,7 @@ public class TelaCaixa
             return;
         }
         
-        ExibirMensagem($"O registro \"{idSeleccionado}\" foi editado com sucesso");
+        ExibirMensagem($"O registro \"{idSelecionado}\" foi editado com sucesso");
     }
 
     public void Excluir()
@@ -140,18 +140,18 @@ public class TelaCaixa
 
         Console.WriteLine("=================================");
 
-        string? idSeleccionado;
+        string? idSelecionado;
 
         do
         {
             Console.WriteLine("Digite o ID do registro que deseja editar");
-            idSeleccionado = Console.ReadLine();
+            idSelecionado = Console.ReadLine();
 
-            if(!string.IsNullOrWhiteSpace(idSeleccionado) && idSeleccionado.Length == 7)
+            if(!string.IsNullOrWhiteSpace(idSelecionado) && idSelecionado.Length == 7)
                 break;
         }while(true);
 
-        bool conseguiuExcluir = repositorioCaixa.Excluir(idSeleccionado);
+        bool conseguiuExcluir = repositorioCaixa.Excluir(idSelecionado);
 
         if (!conseguiuExcluir)
         {
@@ -159,7 +159,7 @@ public class TelaCaixa
             return;
         }
         
-        ExibirMensagem($"O registro \"{idSeleccionado}\" foi excluido com sucesso");
+        ExibirMensagem($"O registro \"{idSelecionado}\" foi excluido com sucesso");
 
     }
 
