@@ -3,25 +3,79 @@ using ClubeDaLeitura.ConsoleApp.Dominio;
 
 namespace ClubeDaLeitura.ConsoleApp.Infraestrutura;
 
-public  class RepoBase
+public abstract class RepoBase
 {
-    public bool Editar(string idSelecionado, EntidadeBase novaEntidade)
+    protected EntidadeBase?[] registros = new EntidadeBase[100];
+
+        public void Cadastrar(EntidadeBase entidade)         //pega info de la tela para trabajar
+    {
+        for(int i = 0; i < registros.Length; i++)
+        {
+            if(registros[i]== null)
+            {
+                registros[i] = entidade;
+                break;
+            }
+        }
+    }
+
+    public bool Editar(string idSelecionado, EntidadeBase entidade)
     {   
-        EntidadeBase? entidadeSeleccionada = SelecionarPorId(idSelecionado);
+        EntidadeBase? entidadeSelecionada = SelecionarPorId(idSelecionado);
 
 
-        if(entidadeSeleccionada == null)
+        if(entidadeSelecionada == null)
             return false;
         
-        entidadeSeleccionada.AtualizarRegistro(novaEntidade);
+        entidadeSelecionada.AtualizarRegistro(entidade);
         
-
+  
         return true;
     }
 
-    public EntidadeBase? SelecinarPorId(string idSelecionado)
+    public bool Excluir(string idSelecionado)
     {
-        return null;
+
+        for(int i = 0; i < registros.Length; i++)
+        {   
+            EntidadeBase? c= registros[i];
+
+            if(c == null)
+                continue;
+
+            if (c.Id == idSelecionado)
+            {
+                registros[i] = null;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public EntidadeBase? SelecionarPorId(string idSelecionado)
+    {
+        EntidadeBase? entidadeSelecionada = null;
+
+        for(int i = 0; i < registros.Length; i++)
+        {   
+            EntidadeBase? c= registros[i];
+
+            if(c == null)
+                continue;
+
+            if (c.Id == idSelecionado)
+            {
+                entidadeSelecionada = c;
+                break;
+            }
+        }
+
+        return entidadeSelecionada;
+    }
+
+    internal EntidadeBase?[] SelecionarTodas()
+    {
+        return registros;
     }
 
 }

@@ -61,7 +61,7 @@ while (true)
             }
             else if(opcaoMenuInterno == "4")
             {
-                telaCaixa.VizualizarTodos(deveExibirCabecalho: true);
+                telaCaixa.VisualizarTodos(deveExibirCabecalho: true);
             }
                        
         }

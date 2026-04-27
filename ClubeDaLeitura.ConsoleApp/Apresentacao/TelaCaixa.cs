@@ -3,167 +3,16 @@ using ClubeDaLeitura.ConsoleApp.Infraestrutura;
 
 namespace ClubeDaLeitura.ConsoleApp.Apresentacao;
 
-public class TelaCaixa
+public class TelaCaixa : TelaBase
 {   
     private RepositorioCaixa repositorioCaixa;
     
-    public TelaCaixa(RepositorioCaixa rC)
+    public TelaCaixa(RepositorioCaixa rC) : base("Caixa", rC)
     {
         repositorioCaixa = rC;
     }
 
-    public string? ObterOpcaoMenu()
-    {
-        Console.Clear();
-        Console.WriteLine("=================================");
-        Console.WriteLine("Clube da Leitura");
-        Console.WriteLine("=================================");
-        Console.WriteLine("1 - Cadastrar caixas");
-        Console.WriteLine("2 - Editar caixas");
-        Console.WriteLine("3 - Excluir caixas");
-        Console.WriteLine("4 - Vizualizar caixas");
-        Console.WriteLine("S - Voltar Munu Principal");
-        Console.WriteLine("=================================");
-        Console.Write("> ");
-        string? opcaoMenu = Console.ReadLine()?.ToUpper();
-
-        return opcaoMenu;
-    }
-
-    public void Cadastrar()
-    {   
-        ExibirCabecalho("Cadastro de Caixa");
-
-        Caixa novaCaixa = ObterDatosCadatras();
-
-        
-        string[] erros = novaCaixa.Validar();
-
-        if(erros.Length > 0)
-        {
-            Console.WriteLine("=================================");
-            Console.ForegroundColor = ConsoleColor.Red;
-
-            for(int i = 0; i < erros.Length; i++)
-            {
-                string erro = erros[i];
-                Console.WriteLine(erro);
-            }
-
-            Console.ResetColor();
-            Console.WriteLine("=================================");
-            Console.WriteLine("Digite ENTER para continuar...");
-            Console.ReadLine();
-
-            Cadastrar();
-            return;
-        }
-        Console.ResetColor();
-
-        repositorioCaixa.Cadastrar(novaCaixa);
-
-        ExibirMensagem($"O registro \"{novaCaixa.Id}\" foi cadastrado com sucesso! ");
-
-    }
-    public void ExibirCabecalho(string titulo)
-    {
-        Console.WriteLine("=================================");
-        Console.WriteLine("Gestao de Caixa");
-        Console.WriteLine("=================================");
-        Console.WriteLine(titulo);
-        Console.WriteLine("=================================");
-    }
-
-    public void Editar()
-    {
-        ExibirCabecalho("Edican de Caixa");
-        
-        VizualizarTodos(deveExibirCabecalho: false);
-
-        Console.WriteLine("=================================");
-
-        string? idSelecionado;
-
-        do
-        {
-            Console.WriteLine("Digite o ID do registro que deseja editar");
-            idSelecionado = Console.ReadLine();
-
-            if(!string.IsNullOrWhiteSpace(idSelecionado) && idSelecionado.Length == 7)
-                break;
-        }while(true);
-
-        Console.WriteLine("=================================");
-
-       
-        Caixa novaCaixa = ObterDatosCadatras();
-
-        string[] erros = novaCaixa.Validar();
-
-        if(erros.Length > 0)
-        {
-            Console.WriteLine("=================================");
-            Console.ForegroundColor = ConsoleColor.Red;
-
-            for(int i = 0; i < erros.Length; i++)
-            {
-                string erro = erros[i];
-                Console.WriteLine(erro);
-            }
-
-            Console.ResetColor();
-            Console.WriteLine("=================================");
-            Console.WriteLine("Digite ENTER para continuar...");
-            Console.ReadLine();
-
-            Editar();
-            return;
-        }
-        Console.ResetColor();
-
-        bool conseguiuEditar = repositorioCaixa.Editar(idSelecionado, novaCaixa);
-
-        if (!conseguiuEditar)
-        {
-            ExibirMensagem($"Nao foi possivel encontrar o registro requisitado");
-            return;
-        }
-        
-        ExibirMensagem($"O registro \"{idSelecionado}\" foi editado com sucesso");
-    }
-
-    public void Excluir()
-    {
-        ExibirCabecalho("Exclusao de Caixa");
-        
-        VizualizarTodos(deveExibirCabecalho: false);
-
-        Console.WriteLine("=================================");
-
-        string? idSelecionado;
-
-        do
-        {
-            Console.WriteLine("Digite o ID do registro que deseja editar");
-            idSelecionado = Console.ReadLine();
-
-            if(!string.IsNullOrWhiteSpace(idSelecionado) && idSelecionado.Length == 7)
-                break;
-        }while(true);
-
-        bool conseguiuExcluir = repositorioCaixa.Excluir(idSelecionado);
-
-        if (!conseguiuExcluir)
-        {
-            ExibirMensagem($"Nao foi possivel encontrar o registro requisitado");
-            return;
-        }
-        
-        ExibirMensagem($"O registro \"{idSelecionado}\" foi excluido com sucesso");
-
-    }
-
-    public void VizualizarTodos(bool deveExibirCabecalho)
+    public override void VisualizarTodos(bool deveExibirCabecalho)
     {
         if(deveExibirCabecalho)
             ExibirCabecalho("Visualizacao de Caixas");
@@ -174,11 +23,11 @@ public class TelaCaixa
             "Id", "Etiqueta", "Cor", "Tempo de Empréstimo"
         );
 
-        Caixa?[] caixas = repositorioCaixa.SelecionarTodas();
+        EntidadeBase?[] caixas = repositorioCaixa.SelecionarTodas();
 
         for(int i = 0; i< caixas.Length; i++)
         {
-            Caixa? c= caixas[i];
+            Caixa? c= (Caixa?)caixas[i];
 
             if(c == null)
                 continue;
@@ -210,13 +59,13 @@ public class TelaCaixa
 
     }
 
-    public Caixa ObterDatosCadatras()
+    protected override EntidadeBase ObterDatosCadatrais()
     {
         Console.WriteLine("Informe a etiqueta da caixa");
         string? etiqueta = Console.ReadLine();
 
         Console.WriteLine("=================================");
-        Console.WriteLine("Selecione uma das cores da caixa");
+        Console.WriteLine("Selecione uma das cores da caixa");  
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("1 - Vermelho");
         Console.ForegroundColor = ConsoleColor.Green;
@@ -250,12 +99,4 @@ public class TelaCaixa
         return novaCaixa;
     }
 
-    private static void ExibirMensagem(string mesagem)
-    {
-        Console.WriteLine("=================================");
-        Console.WriteLine(mesagem);
-        Console.WriteLine("=================================");
-        Console.WriteLine("Digite ENTER para continuar...");
-        Console.ReadLine();
-    }
 }
