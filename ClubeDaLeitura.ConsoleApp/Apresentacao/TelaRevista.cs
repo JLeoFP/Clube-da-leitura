@@ -140,7 +140,52 @@ public class TelaRevista
 
     public void VizualizarTodos(bool deveExibirCabecalho)
     {
+        if(deveExibirCabecalho)
+            ExibirCabecalho("Visualização de Revistas");
         
+
+       Console.WriteLine(
+            "{0, -7} | {1, -25} | {2, -6} | {3, -4} | {4, -15}",
+            "Id", "Título", "Edição", "Ano", "Caixa"
+        );
+
+        Revista?[] revistas = repositorioRevista.SelecionarTodas();
+
+        for(int i =0; i< revistas.Length; i++)
+        {
+            Revista? r = revistas[i];
+
+            if(r == null)
+                continue;
+
+            Console.Write("{0, -7} | ", r.Id);
+            Console.Write("{0, -25} | ", r.Titulo);
+            Console.Write("{0, -6} | ", r.NumeroEdi);
+            Console.Write("{0, -4} | ", r.AnoPublicacao);
+
+            string corSelecionada = r.Caixa.Cor;
+
+            if (corSelecionada == "Vermelho")
+                Console.ForegroundColor = ConsoleColor.Red;
+
+            else if (corSelecionada == "Verde")
+                Console.ForegroundColor = ConsoleColor.Green;
+
+            else if (corSelecionada == "Azul")
+                Console.ForegroundColor = ConsoleColor.Blue;
+
+            Console.Write("{0, -15}", r.Caixa.Etiqueta);
+
+            Console.ResetColor();
+            Console.WriteLine();
+        }
+
+        if (deveExibirCabecalho)
+        {
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("Digite ENTER para continuar...");
+            Console.ReadLine();
+        }
     }
 
     public void ExibirCabecalho(string titulo)

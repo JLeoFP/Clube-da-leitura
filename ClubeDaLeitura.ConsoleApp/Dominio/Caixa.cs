@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 
 namespace ClubeDaLeitura.ConsoleApp.Dominio;
 
@@ -12,25 +11,21 @@ namespace ClubeDaLeitura.ConsoleApp.Dominio;
     ● Cada caixa define o prazo máximo para empréstimo de suas revistas
 */
 
-public class Caixa
+public class Caixa : EntidadeBase
 {   
-    public string Id {get; set;} = string.Empty;
-
     public string Etiqueta {get; set;} = string.Empty;
     public string Cor {get; set;} = string.Empty;
     public int DiasDeEmprestimo {get; set;} = 7;
 
     public Caixa(string etiqueta, string cor, int diasDeEmprestimo)      //constructor de clase
     {   
-        Id = Convert.ToHexString(RandomNumberGenerator.GetBytes(20))
-        .ToLower()
-        .Substring(0, 7);
+    
         Etiqueta = etiqueta;
         Cor = cor;
         DiasDeEmprestimo = diasDeEmprestimo;
     }
 
-    public string[] Validar()
+    public override string[] Validar()
     {
         string erros = string.Empty;
 
@@ -51,11 +46,12 @@ public class Caixa
         return erros.Split(';', StringSplitOptions.RemoveEmptyEntries);
     }
 
-    public void AtualizarRegistro(Caixa caixaAtualizada)
-    {
+    public override void AtualizarRegistro(EntidadeBase entidadeAtualizada)
+    {   
+        Caixa caixaAtualizada = (Caixa)entidadeAtualizada;
+
         Etiqueta = caixaAtualizada.Etiqueta;
         Cor = caixaAtualizada.Cor;
         DiasDeEmprestimo = caixaAtualizada.DiasDeEmprestimo;
     }
-
 }
