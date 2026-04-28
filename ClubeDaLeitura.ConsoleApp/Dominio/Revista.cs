@@ -1,7 +1,6 @@
 using System.Security.Cryptography;
 
 namespace ClubeDaLeitura.ConsoleApp.Dominio.Base;
-
 public class Revista : EntidadeBase
 {
     
@@ -9,6 +8,7 @@ public class Revista : EntidadeBase
     public int NumeroEdi { get; set; }
     public int AnoPublicacao { get; set; }
     public Caixa Caixa { get; set; }
+    public StatusRevista status { get; set; }
 
     public Revista(string titulo, int numeroEdi, int anoPublicacao, Caixa caixa)
     {
@@ -51,5 +51,10 @@ public class Revista : EntidadeBase
         NumeroEdi =revistaAtualizada.NumeroEdi;
         AnoPublicacao = revistaAtualizada.AnoPublicacao;
         Caixa = revistaAtualizada.Caixa;
+    }
+
+    public void Emprestar()
+    {
+        status = StatusRevista.Emprestada;
     }
 }

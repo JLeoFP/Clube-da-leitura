@@ -68,7 +68,6 @@ while (true)
             }
                        
         }
-        
         else if (opcaoMenuPrincipal == "2") // Revistas
         {
             opcaoMenuInterno = telaRevista.ObterOpcaoMenu();
@@ -126,5 +125,5 @@ while (true)
         }
 
     }
-    
+
 }
