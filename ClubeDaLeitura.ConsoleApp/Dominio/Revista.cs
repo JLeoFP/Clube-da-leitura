@@ -57,4 +57,9 @@ public class Revista : EntidadeBase
     {
         status = StatusRevista.Emprestada;
     }
+
+    public void Devolver()
+    {
+        status = StatusRevista.Disponivle;
+    }
 }

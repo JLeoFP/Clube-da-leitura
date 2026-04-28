@@ -25,19 +25,19 @@ public class TelaAmigo : TelaBase
             "Id", "Nome", "Responsavel", "Telefone"
         );
 
-        EntidadeBase?[] amigos = repositorioAmigo.SelecionarTodas();
+        EntidadeBase?[] amigos = repositorioAmigo.SelecionarTodos();
 
-        for(int i = 0; i < amigos.Length; i++)
+        for (int i = 0; i < amigos.Length; i++)
         {
             Amigo? a = (Amigo?)amigos[i];
 
-            if(a == null)
+            if (a == null)
                 continue;
 
             Console.WriteLine(
-            "{0, -7} | {1, -15} | {2, -15} | {3, -13}",
-            a.Id, a.Nome, a.NomeResponsavel, a.Telefone
-        );   
+                "{0, -7} | {1, -15} | {2, -15} | {3, -13}",
+                a.Id, a.Nome, a.NomeResponsavel, a.Telefone
+            );
         }
 
         if(deveExibirCabecalho)
@@ -51,7 +51,7 @@ public class TelaAmigo : TelaBase
     protected override EntidadeBase ObterDatosCadatrais()
     {
         Console.Write("Digite o nome: ");
-        string nome = Console.ReadLine() ?? string.Empty; 
+        string nome = Console.ReadLine() ?? string.Empty; // null coalescing operator
 
         Console.Write("Digite o nome do responsável: ");
         string nomeResponsavel = Console.ReadLine() ?? string.Empty;

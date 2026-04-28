@@ -1,7 +1,6 @@
 using System.Security.Cryptography;
 using ClubeDaLeitura.ConsoleApp.Dominio.Base;
 
-
 namespace ClubeDaLeitura.ConsoleApp.Dominio;
 public class Emprestimo 
 {   
@@ -19,6 +18,14 @@ public class Emprestimo
 
             return conclusao;
 
+        }
+    }
+
+    public bool EstaAtrasado
+    {
+        get
+        {
+            return Status != StatusEmprestimo.Aberto && DateTime.Now > ConclusaoPrevista;
         }
     }
     public StatusEmprestimo Status { get; set; } = StatusEmprestimo.Indefinido;
@@ -55,5 +62,10 @@ public class Emprestimo
         Revista.Emprestar();
 
         Amigo.AdicionarEmprestimo(this);
+    }
+    public void Concluir()
+    {
+        Status = StatusEmprestimo.Concluido;
+        Revista.Devolver();
     }
 }

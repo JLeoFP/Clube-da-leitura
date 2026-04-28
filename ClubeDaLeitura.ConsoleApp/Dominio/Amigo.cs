@@ -1,4 +1,3 @@
-using System;
 using ClubeDaLeitura.ConsoleApp.Dominio.Base;
 
 namespace ClubeDaLeitura.ConsoleApp.Dominio;

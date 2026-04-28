@@ -24,7 +24,7 @@ public class TelaCaixa : TelaBase
             "Id", "Etiqueta", "Cor", "Tempo de Empréstimo"
         );
 
-        EntidadeBase?[] caixas = repositorioCaixa.SelecionarTodas();
+        EntidadeBase?[] caixas = repositorioCaixa.SelecionarTodos();
 
         for(int i = 0; i< caixas.Length; i++)
         {

@@ -1,18 +1,26 @@
 ﻿using ClubeDaLeitura.ConsoleApp.Apresentacao;
+using ClubeDaLeitura.ConsoleApp.Dominio;
 using ClubeDaLeitura.ConsoleApp.Dominio.Base;
 using ClubeDaLeitura.ConsoleApp.Infraestrutura;
 
 RepositorioCaixa repositorioCaixa = new RepositorioCaixa();
 RepositorioRevista repositorioRevista = new RepositorioRevista();
 RepositorioAmigo repositorioAmigo = new RepositorioAmigo();
+RepositorioEmprestimo repositorioEmprestimo = new RepositorioEmprestimo();
 
 TelaCaixa telaCaixa = new TelaCaixa(repositorioCaixa);
 TelaRevista telaRevista = new TelaRevista(repositorioRevista, repositorioCaixa);
 TelaAmigo telaAmigo = new TelaAmigo(repositorioAmigo);
+TelaEmprestimo telaEmprestimo = new TelaEmprestimo(repositorioEmprestimo, repositorioRevista, repositorioAmigo);
 
 
 Caixa caixa= new Caixa("lanzamiento", "rojo",3);
 repositorioCaixa.Cadastrar(caixa);
+Amigo amigo = new Amigo("Leo", "patricia", "49 98222-4353");
+Revista revista = new Revista("action comic", 152,1993,caixa);
+Emprestimo emprestimo = new Emprestimo(revista, amigo);
+emprestimo.Abrir();
+repositorioEmprestimo.Cadastrar(emprestimo);
 
 while (true)
 {
@@ -122,6 +130,29 @@ while (true)
                 telaAmigo.VisualizarTodos(deveExibirCabecalho: true);
             }
 
+        }
+        else if (opcaoMenuPrincipal == "4")
+        {
+            opcaoMenuInterno = telaEmprestimo.ObterOpcaoMenu();
+
+            if (opcaoMenuInterno == "S")
+            {
+                Console.Clear();
+                break;
+            }
+
+            if(opcaoMenuInterno == "1")
+            {
+                telaEmprestimo.Abrir();
+            }
+            else if (opcaoMenuInterno == "2")
+            {   
+                telaEmprestimo.Concluir();
+            }
+            else if (opcaoMenuInterno == "3")
+            {
+                telaEmprestimo.VisualizarTodos(deveExibirCabecalho: true);
+            }
         }
 
     }

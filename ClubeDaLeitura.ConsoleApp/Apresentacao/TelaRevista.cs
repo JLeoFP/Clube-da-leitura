@@ -40,7 +40,7 @@ public class TelaRevista : TelaBase
             "Id", "Etiqueta", "Cor", "Tempo de Empréstimo"
         );
 
-        EntidadeBase?[] caixas = repositorioCaixa.SelecionarTodas();
+        EntidadeBase?[] caixas = repositorioCaixa.SelecionarTodos();
 
         for(int i = 0; i< caixas.Length; i++)
         {
@@ -77,11 +77,11 @@ public class TelaRevista : TelaBase
         
 
        Console.WriteLine(
-            "{0, -7} | {1, -25} | {2, -6} | {3, -4} | {4, -15}",
-            "Id", "Título", "Edição", "Ano", "Caixa"
+            "{0, -7} | {1, -25} | {2, -6} | {3, -4} | {4, -10} | {5, -15}",
+            "Id", "Título", "Edição", "Ano", "Status", "Caixa"
         );
 
-        EntidadeBase?[] revistas = repositorioRevista.SelecionarTodas();
+        EntidadeBase?[] revistas = repositorioRevista.SelecionarTodos();
 
         for(int i =0; i< revistas.Length; i++)
         {
@@ -94,6 +94,13 @@ public class TelaRevista : TelaBase
             Console.Write("{0, -25} | ", r.Titulo);
             Console.Write("{0, -6} | ", r.NumeroEdi);
             Console.Write("{0, -4} | ", r.AnoPublicacao);
+
+            string status = r.status.ToString();
+
+            if (r.status == StatusRevista.Disponivle)
+                status = "Disponível";
+
+            Console.Write("{0, -10} | ", status);
 
             string corSelecionada = r.Caixa.Cor;
 

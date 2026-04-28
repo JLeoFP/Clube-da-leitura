@@ -7,7 +7,7 @@ public abstract class RepoBase
 {
     protected EntidadeBase?[] registros = new EntidadeBase[100];
 
-        public void Cadastrar(EntidadeBase entidade)         //pega info de la tela para trabajar
+    public void Cadastrar(EntidadeBase entidade)         //pega info de la tela para trabajar
     {
         for(int i = 0; i < registros.Length; i++)
         {
@@ -73,7 +73,7 @@ public abstract class RepoBase
         return entidadeSelecionada;
     }
 
-    internal EntidadeBase?[] SelecionarTodas()
+    internal EntidadeBase?[] SelecionarTodos()
     {
         return registros;
     }
