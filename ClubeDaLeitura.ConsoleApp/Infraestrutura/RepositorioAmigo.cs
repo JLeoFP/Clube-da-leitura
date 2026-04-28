@@ -2,5 +2,5 @@ using ClubeDaLeitura.ConsoleApp.Infraestrutura.Base;
 
 namespace ClubeDaLeitura.ConsoleApp.Infraestrutura;
 
-public class RepositorioCaixa : RepoBase;
+public class RepositorioAmigo : RepoBase;
 
