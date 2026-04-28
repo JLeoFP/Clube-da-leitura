@@ -1,5 +1,5 @@
 ﻿using ClubeDaLeitura.ConsoleApp.Apresentacao;
-using ClubeDaLeitura.ConsoleApp.Dominio;
+using ClubeDaLeitura.ConsoleApp.Dominio.Base;
 using ClubeDaLeitura.ConsoleApp.Infraestrutura;
 
 RepositorioCaixa repositorioCaixa = new RepositorioCaixa();
@@ -90,7 +90,7 @@ while (true)
             }
             else if(opcaoMenuInterno == "4")
             {
-                telaRevista.VizualizarTodos(deveExibirCabecalho: true);
+                telaRevista.VisualizarTodos(deveExibirCabecalho: true);
             }
         }
 
