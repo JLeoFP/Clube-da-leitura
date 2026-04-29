@@ -1,6 +1,5 @@
 ﻿using ClubeDaLeitura.ConsoleApp.Apresentacao;
 using ClubeDaLeitura.ConsoleApp.Apresentacao.Base;
-
 using ClubeDaLeitura.ConsoleApp.Infraestrutura;
 
 RepositorioCaixa repositorioCaixa = new RepositorioCaixa();
@@ -20,7 +19,7 @@ TelaPrincipal telaPrincipal = new TelaPrincipal
 
 while (true)
 {
-    TelaBase? telaSelecionada = telaPrincipal.ApresnetarMunuPincipal();
+    ITela? telaSelecionada = telaPrincipal.ApresnetarMunuPincipal();
 
     if (telaSelecionada == null)
     {
@@ -30,7 +29,7 @@ while (true)
 
     while (true)
     {   
-        
+
         string? opcaoMenuInterno = telaSelecionada.ObterOpcaoMenu();
 
         if (opcaoMenuInterno == "S")
@@ -38,29 +37,34 @@ while (true)
             Console.Clear();
             break;
         }
- 
-        if(opcaoMenuInterno == "1")
-        {
-            telaSelecionada.Cadastrar();
+
+        if(telaSelecionada is TelaBase)
+        {   
+            TelaBase telaBase = (TelaBase)telaSelecionada;  
+
+            if(opcaoMenuInterno == "1")
+            {
+                telaBase.Cadastrar();
+            }
+            else if(opcaoMenuInterno == "2")
+            {
+                telaBase.Editar();
+            }
+            else if(opcaoMenuInterno == "3")
+            {
+                telaBase.Excluir();
+            }
+            else if(opcaoMenuInterno == "4")
+            {
+                telaBase.VisualizarTodos(deveExibirCabecalho: true);
+            }
         }
-        else if(opcaoMenuInterno == "2")
-        {
-            telaSelecionada.Editar();
-        }
-        else if(opcaoMenuInterno == "3")
-        {
-            telaSelecionada.Excluir();
-        }
-        else if(opcaoMenuInterno == "4")
-        {
-            telaSelecionada.VisualizarTodos(deveExibirCabecalho: true);
-        }
-                       
-        
-        
-        
-        else if (opcaoMenuPrincipal == "4")
-        {
+    
+        else if (telaSelecionada is TelaEmprestimo)
+        {   
+
+            TelaEmprestimo telaEmprestimo = (TelaEmprestimo)telaSelecionada;
+
             opcaoMenuInterno = telaEmprestimo.ObterOpcaoMenu();
 
             if (opcaoMenuInterno == "S")
